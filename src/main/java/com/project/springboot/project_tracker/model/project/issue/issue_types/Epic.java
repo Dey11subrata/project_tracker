@@ -6,9 +6,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
-@Entity
+//@Entity
 @Data
-public class Epic extends Issue {
+public class Epic  {
     private LocalDate epicStartDate;
     private LocalDate epicDueDate;
 }
