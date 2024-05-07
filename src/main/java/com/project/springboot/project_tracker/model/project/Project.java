@@ -1,13 +1,13 @@
 package com.project.springboot.project_tracker.model.project;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.project.springboot.project_tracker.model.project.issue.Issue;
+import com.project.springboot.project_tracker.model.users.User;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,4 +28,10 @@ public class Project {
     private LocalDate projectStartDate;
     private LocalDate projectEstimatedCompletionDate;
 //    private LocalDate projectActualCompletionDate;
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> user;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Issue> issue;
 }
