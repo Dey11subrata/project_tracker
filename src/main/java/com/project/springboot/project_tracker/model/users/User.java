@@ -1,6 +1,8 @@
 package com.project.springboot.project_tracker.model.users;
 
 import com.project.springboot.project_tracker.model.project.Project;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
 import com.project.springboot.project_tracker.model.project.sprint.Sprint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -39,6 +41,12 @@ public class User {
 
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
+
+    @ManyToMany(mappedBy = "epicAssignee", fetch = FetchType.EAGER)
+    private Set<Epic> epics;
+
+    @ManyToMany(mappedBy = "storyAssignee", fetch = FetchType.EAGER)
+    private Set<Story> stories;
 
     @ManyToOne
     private Sprint sprint;

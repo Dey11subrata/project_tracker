@@ -1,10 +1,9 @@
 package com.project.springboot.project_tracker.model.project.sprint;
 
-import com.project.springboot.project_tracker.model.project.issue.issue_types.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +21,7 @@ public class Sprint {
     private LocalDate sprintEndDate;
     private String sprintGoal;
 
-    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Story> stories;
 
     @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)

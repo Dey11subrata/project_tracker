@@ -14,6 +14,6 @@ public class Label {
     private int labelId;
     private String labelName;
 
-    @ManyToMany(mappedBy = "labels", fetch = FetchType.EAGER)
-    private List<Issue> issue;
+//    @ManyToMany(mappedBy = "labels", fetch = FetchType.EAGER)
+//    private List<Issue> issue;
 }

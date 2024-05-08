@@ -1,6 +1,8 @@
 package com.project.springboot.project_tracker.model.project;
 
 import com.project.springboot.project_tracker.model.project.issue.Issue;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +10,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -33,5 +36,10 @@ public class Project {
     private List<User> user;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Issue> issue;
+    private Set<Epic> epics;
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+//    private List<Issue> issue;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+    private List<Story> stories;
 }
