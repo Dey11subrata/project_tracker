@@ -3,6 +3,9 @@ package com.project.springboot.project_tracker.model.project.issue.issue_types.e
 import com.project.springboot.project_tracker.constants.Status;
 import com.project.springboot.project_tracker.model.Label;
 import com.project.springboot.project_tracker.model.project.Project;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Bug;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Task;
 import com.project.springboot.project_tracker.model.project.sprint.Sprint;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
@@ -19,22 +22,33 @@ public class Story {
     private int storyId;
     private String storyName;
 
-    //    private IssueType  issueType;
+
     private Status storyStatus;
     private String storySummary;
     private String storyDescription;
+    private int storyStoryPointEstimate;
 
     @ManyToOne
     private Project project;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<User> storyAssignee;
-//    private Set<Label> storyLabels;
-    //    private Epic storyParent;
-    private int storyStoryPointEstimate;
-//    private User storyReporter;
+    @ManyToOne
+    private User storyAssignee;
 
+    @OneToOne
+    private User storyReporter;
+
+    @ManyToOne
+    private Epic storyParent;
+
+    @OneToMany(mappedBy = "taskParent", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
 
     @ManyToOne
     private Sprint sprint;
+
+    @OneToMany(mappedBy = "bugParent", cascade = CascadeType.ALL)
+    private Set<Bug> bugs;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Label> storyLabels;
 }

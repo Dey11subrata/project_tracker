@@ -3,10 +3,7 @@ package com.project.springboot.project_tracker.model.project.issue.issue_types.e
 import com.project.springboot.project_tracker.constants.PriorityLevel;
 import com.project.springboot.project_tracker.constants.Status;
 import com.project.springboot.project_tracker.model.users.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Set;
@@ -18,9 +15,17 @@ public class SubTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int subTaskId;
     private String subTaskName;
-    private PriorityLevel subTaskPriority;
+//    private PriorityLevel subTaskPriority;
     private String subtaskDescription;
-//    private Set<User> subTaskAssignee;
     private Status subTaskStatus;
+
+    @ManyToOne
+    private User subTaskAssignee;
+
+    @ManyToOne
+    private Task subTaskParent;
+
+    @OneToOne
+    private User subTaskReporter;
 
 }

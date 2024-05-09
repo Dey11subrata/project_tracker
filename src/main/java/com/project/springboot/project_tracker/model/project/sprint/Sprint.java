@@ -1,6 +1,8 @@
 package com.project.springboot.project_tracker.model.project.sprint;
 
 import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Bug;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Task;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,4 +28,10 @@ public class Sprint {
 
     @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
     private List<User> user;
+
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
+
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
+    private Set<Bug> bugs;
 }
