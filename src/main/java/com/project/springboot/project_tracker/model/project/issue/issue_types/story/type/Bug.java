@@ -1,10 +1,9 @@
-package com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type;
+package com.project.springboot.project_tracker.model.project.issue.issue_types.story.type;
 
 import com.project.springboot.project_tracker.constants.Status;
 import com.project.springboot.project_tracker.model.Label;
 import com.project.springboot.project_tracker.model.project.Project;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
 import com.project.springboot.project_tracker.model.project.sprint.Sprint;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;

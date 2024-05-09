@@ -1,10 +1,9 @@
 package com.project.springboot.project_tracker.model.project;
 
-import com.project.springboot.project_tracker.model.project.issue.Issue;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Bug;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Task;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Bug;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Task;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -1,8 +1,8 @@
 package com.project.springboot.project_tracker.model.project.sprint;
 
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Bug;
-import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Task;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Bug;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Task;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
