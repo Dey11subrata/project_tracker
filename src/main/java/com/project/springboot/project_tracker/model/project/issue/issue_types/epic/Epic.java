@@ -3,6 +3,7 @@ package com.project.springboot.project_tracker.model.project.issue.issue_types.e
 import com.project.springboot.project_tracker.constants.Status;
 import com.project.springboot.project_tracker.model.Label;
 import com.project.springboot.project_tracker.model.project.Project;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,21 +19,29 @@ public class Epic {
     private int epicId;
     private String epicName;
 
-    //private IssueType issueType;
+
     private Status epicStatus;
     private String epicSummary;
     private String epicDescription;
 
-//    private Set<Label> epicLabels;
+
     //    private Epic epicParent;
     private LocalDate epicStartDate;
     private LocalDate epicDueDate;
-//    private User epicReporter;
+
+    @OneToOne
+    private User epicReporter;
 
     @ManyToOne
     private Project project;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<User> epicAssignee;
+
+    @OneToMany(mappedBy = "storyParent", cascade = CascadeType.ALL)
+    private Set<Story> stories;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Label> epicLabels;
 
 }

@@ -3,6 +3,8 @@ package com.project.springboot.project_tracker.model.project;
 import com.project.springboot.project_tracker.model.project.issue.Issue;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.Epic;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.Story;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Bug;
+import com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type.Task;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +22,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectId;
 
-    @NotBlank(message = "oroject name can not be left blank")
+    @NotBlank(message = "project name can not be left blank")
     private String projectName;
 
     @NotBlank(message = "project owner can not be left blank")
@@ -35,11 +37,19 @@ public class Project {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> user;
 
+    @OneToOne
+    private User projectReporter;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Epic> epics;
-//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-//    private List<Issue> issue;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private List<Story> stories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+    private Set<Task> tasks;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<Bug> bugs;
 }
