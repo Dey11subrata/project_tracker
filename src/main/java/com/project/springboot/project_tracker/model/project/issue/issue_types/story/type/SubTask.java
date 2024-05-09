@@ -1,12 +1,9 @@
-package com.project.springboot.project_tracker.model.project.issue.issue_types.epic.story.type;
+package com.project.springboot.project_tracker.model.project.issue.issue_types.story.type;
 
-import com.project.springboot.project_tracker.constants.PriorityLevel;
 import com.project.springboot.project_tracker.constants.Status;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Set;
 
 @Entity
 @Data
