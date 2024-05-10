@@ -6,7 +6,6 @@ import com.project.springboot.project_tracker.model.project.issue.issue_types.st
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Task;
 import com.project.springboot.project_tracker.model.users.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -20,11 +19,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectId;
-
-    @NotBlank(message = "project name can not be left blank")
     private String projectName;
-
-    @NotBlank(message = "project owner can not be left blank")
     private String productOwner;
     private String projectManager;
     private String projectStatus;
