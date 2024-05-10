@@ -2,6 +2,8 @@ package com.project.springboot.project_tracker.repository.project_repository.iss
 
 import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface EpicRepository extends JpaRepository<Epic, Integer> {
 }
