@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -25,17 +26,37 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/create-user")
-    public User createUser(@RequestBody UserDto userDto){
+    @PostMapping("/register_user")
+    public User registerUser(@RequestBody UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         return userService.createUser(user);
+//        returning in this manner exposes all the user related fields
     }
 
-    @GetMapping("/list-all-users")
-    public List<User> listAllUser(){
-return userService.listAllUsers();
+    @GetMapping("/list_all_users")
+    public List<User> listAllUser() {
+        return userService.listAllUsers();
     }
 
+    @GetMapping("/")
+    public User updateUserDetail(@RequestParam(name = "email", required = false) String userEmail,
+                                 @RequestParam(name = "id", required = false) String userId,
+                                 @RequestParam(name = "firstname", required = false) String userFirstName,
+                                 @RequestParam(name = "lastname", required = false) String userLastName) {
+
+      Optional<User> searchedUser = userEmail != null && !userEmail.trim().isEmpty() ?
+                userService.searchUserByEmail(userEmail.trim()) :
+                (userId != null && !userId.trim().isEmpty() ?
+                        userService.searchUserById(Integer.parseInt(userId.trim())) : Optional.empty());
+
+        if(searchedUser.isEmpty()){
+
+            throw new RuntimeException("not a valid user");
+        }
+
+        return searchedUser.get();
+
+    }
 
 
 }
