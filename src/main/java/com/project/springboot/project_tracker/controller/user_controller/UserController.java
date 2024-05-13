@@ -35,14 +35,17 @@ public class UserController {
 
     @GetMapping("/list_all_users")
     public List<User> listAllUser() {
+        log.info("incoming request- list");
         return userService.listAllUsers();
     }
 
-    @GetMapping("/")
+    @GetMapping("/search")
     public User updateUserDetail(@RequestParam(name = "email", required = false) String userEmail,
                                  @RequestParam(name = "id", required = false) String userId,
                                  @RequestParam(name = "firstname", required = false) String userFirstName,
                                  @RequestParam(name = "lastname", required = false) String userLastName) {
+        log.info("incoming request");
+        log.info(userEmail);
 
       Optional<User> searchedUser = userEmail != null && !userEmail.trim().isEmpty() ?
                 userService.searchUserByEmail(userEmail.trim()) :
