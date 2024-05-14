@@ -14,4 +14,6 @@ public interface UserService {
     Optional<User>  searchUserByEmail(String trim);
 
     Optional<User> searchUserById(int i);
+
+    User updateUser(int id, User user);
 }

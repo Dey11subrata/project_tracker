@@ -40,4 +40,10 @@ public class UserServiceImpl implements UserService {
     public Optional<User> searchUserById(int id) {
         return userRepository.findById(id);
     }
+
+    @Override
+    public User updateUser(int id, User user) {
+        user.setUserId(id);
+        return userRepository.save(user);
+    }
 }
