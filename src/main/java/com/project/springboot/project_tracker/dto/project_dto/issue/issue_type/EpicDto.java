@@ -4,22 +4,21 @@ import com.project.springboot.project_tracker.constants.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class EpicDto {
 
     private String epicName;
-
-
     private Status epicStatus;
     private String epicSummary;
     private String epicDescription;
-
-
-    //    private Epic epicParent;
     private LocalDate epicStartDate;
     private LocalDate epicDueDate;
+    //    private Epic epicParent;
 }
