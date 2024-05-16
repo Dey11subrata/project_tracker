@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Epic {
+public class Epic { 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int epicId;

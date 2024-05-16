@@ -25,7 +25,8 @@ public class EpicController {
     }
 
     @PostMapping("/create")
-    public Epic createEpic(@RequestBody EpicDto epicDto){
+    public Epic createEpic(@RequestBody EpicDto epicDto, @RequestParam int projectId){
+//        projectId is required so that whenever an issue is created it got attached to some project.
 epicDto.setEpicStartDate(LocalDate.now());
 epicDto.setEpicDueDate(LocalDate.now().plusDays(12));
         Epic epicToCreate = modelMapper.map(epicDto, Epic.class);
