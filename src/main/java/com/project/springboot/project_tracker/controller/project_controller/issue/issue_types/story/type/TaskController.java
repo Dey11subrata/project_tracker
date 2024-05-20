@@ -1,6 +1,7 @@
 package com.project.springboot.project_tracker.controller.project_controller.issue.issue_types.story.type;
 
 import com.project.springboot.project_tracker.dto.project_dto.issue.issue_type.story.type.TaskDto;
+import com.project.springboot.project_tracker.exceptions.NoSuchTaskFoundException;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Task;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
@@ -40,8 +41,18 @@ public class TaskController {
         return taskService.createTask(taskToCreate);
     }
 
-    @GetMapping("")
+    @GetMapping("/list-all")
     public List<Task> listOfAllTask(){
         return taskService.getListOfAllTask();
+    }
+
+    @GetMapping("")
+    public TaskDto openTaskWithId(@RequestParam(name = "task-id") int taskId){
+        Optional<Task> task = taskService.findTaskById(taskId);
+        if(task.isPresent()){
+            TaskDto taskDto = modelMapper.map(task.get(), TaskDto.class);
+            return taskDto;
+        }
+        throw new NoSuchTaskFoundException("searched task not found");
     }
 }

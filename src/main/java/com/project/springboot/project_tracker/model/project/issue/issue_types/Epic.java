@@ -18,13 +18,9 @@ public class Epic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int epicId;
     private String epicName;
-
-
     private Status epicStatus;
     private String epicSummary;
     private String epicDescription;
-
-
     //    private Epic epicParent;
     private LocalDate epicStartDate;
     private LocalDate epicDueDate;

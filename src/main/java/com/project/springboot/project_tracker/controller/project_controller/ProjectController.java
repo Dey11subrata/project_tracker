@@ -1,6 +1,7 @@
 package com.project.springboot.project_tracker.controller.project_controller;
 
 import com.project.springboot.project_tracker.dto.project_dto.ProjectDto;
+import com.project.springboot.project_tracker.exceptions.NoSuchProjectFoundException;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
 import com.project.springboot.project_tracker.utility.response.Response;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/project")
@@ -42,8 +44,21 @@ public class ProjectController {
     }
 
 
+    @GetMapping("/list-all")
+    public List<Project> listOfAllProject(@RequestParam(name = "page-number", defaultValue ="0") int pageNumber,
+                                          @RequestParam(name="page-size", defaultValue = "2") int pageSize) {
+
+        return projectService.getListOfAllProject(pageNumber, pageSize);
+    }
+
+    // get details of a project
     @GetMapping("")
-    public List<Project> listOfAllProject() {
-        return projectService.getListOfAllProject();
+    public ProjectDto openProjectWithId(@RequestParam(name = "project-id", required = true) int id){
+        Optional<Project> aProjectById = projectService.findAProjectById(id);
+        if(aProjectById.isPresent()){
+            ProjectDto projectResponse = modelMapper.map(aProjectById.get(), ProjectDto.class);
+            return projectResponse;
+        }
+        throw new NoSuchProjectFoundException("project looking for is not available");
     }
 }

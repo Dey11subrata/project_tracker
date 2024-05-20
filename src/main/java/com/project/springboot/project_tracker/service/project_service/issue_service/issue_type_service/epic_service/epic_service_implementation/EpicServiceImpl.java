@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EpicServiceImpl implements EpicService {
@@ -26,5 +27,10 @@ public class EpicServiceImpl implements EpicService {
     @Override
     public List<Epic> getListOfEpic() {
         return epicRepository.findAll();
+    }
+
+    @Override
+    public Optional<Epic> findEpicById(int epicId) {
+        return epicRepository.findById(epicId);
     }
 }
