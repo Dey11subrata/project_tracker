@@ -43,7 +43,9 @@ public class ProjectController {
 
 
     @GetMapping("")
-    public List<Project> listOfAllProject() {
-        return projectService.getListOfAllProject();
+    public List<Project> listOfAllProject(@RequestParam(name = "page-number", defaultValue ="0") int pageNumber,
+                                          @RequestParam(name="page-size", defaultValue = "2") int pageSize) {
+
+        return projectService.getListOfAllProject(pageNumber, pageSize);
     }
 }

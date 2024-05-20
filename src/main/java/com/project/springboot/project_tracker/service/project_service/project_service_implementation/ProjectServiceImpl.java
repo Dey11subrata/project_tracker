@@ -4,6 +4,8 @@ import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.repository.project_repository.ProjectRepository;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getListOfAllProject() {
-        return projectRepository.findAll();
+    public List<Project> getListOfAllProject(int pageNumber, int pageSize) {
+        /*
+        * implementing pagination
+        */
+        Pageable paging = PageRequest.of(pageNumber, pageSize);
+
+        return projectRepository.findAll(paging).toList();
     }
 
     @Override
