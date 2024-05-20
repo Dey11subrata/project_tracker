@@ -1,6 +1,7 @@
 package com.project.springboot.project_tracker.controller.project_controller.issue.issue_types.story.type;
 
 import com.project.springboot.project_tracker.dto.project_dto.issue.issue_type.story.type.BugDto;
+import com.project.springboot.project_tracker.exceptions.NoSuchBugFoundException;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Bug;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
@@ -39,8 +40,19 @@ public class BugController {
         return bugService.createBug(bugToCreate);
     }
 
-    @GetMapping("")
+    @GetMapping("/list-all")
     public List<Bug> listOfAllBug(){
         return bugService.getListOfAllBug();
+    }
+
+    // open a bug with id
+    @GetMapping("")
+    public BugDto openBugWithId(@RequestParam(name="bug-id") int bugId){
+        Optional<Bug> bug = bugService.findBugWithId(bugId);
+        if(bug.isPresent()){
+            BugDto bugDto = modelMapper.map(bug.get(), BugDto.class);
+            return bugDto;
+        }
+        throw new NoSuchBugFoundException("searched bug is not found....");
     }
 }

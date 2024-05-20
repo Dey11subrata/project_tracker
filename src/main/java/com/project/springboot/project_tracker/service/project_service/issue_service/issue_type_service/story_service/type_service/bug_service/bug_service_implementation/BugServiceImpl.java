@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BugServiceImpl implements BugService {
@@ -25,5 +26,10 @@ public class BugServiceImpl implements BugService {
     @Override
     public List<Bug> getListOfAllBug() {
         return bugRepository.findAll();
+    }
+
+    @Override
+    public Optional<Bug> findBugWithId(int bugId) {
+        return bugRepository.findById(bugId);
     }
 }

@@ -31,7 +31,7 @@ public class SubTaskController {
            return subTaskService.createSubTask(subTaskToCreate);
     }
 
-    @GetMapping("")
+    @GetMapping("list-all")
     public List<SubTask> listOfAllSubTask(){
         return subTaskService.getAllSubTask();
     }

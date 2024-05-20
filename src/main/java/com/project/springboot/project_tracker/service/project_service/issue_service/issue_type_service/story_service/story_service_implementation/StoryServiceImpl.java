@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StoryServiceImpl implements StoryService {
@@ -26,5 +27,10 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public List<Story> getListOfAllStory() {
         return storyRepository.findAll();
+    }
+
+    @Override
+    public Optional<Story> findStoryById(int storyId) {
+        return storyRepository.findById(storyId);
     }
 }

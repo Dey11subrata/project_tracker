@@ -1,6 +1,7 @@
 package com.project.springboot.project_tracker.controller.project_controller.issue.issue_types;
 
 import com.project.springboot.project_tracker.dto.project_dto.issue.issue_type.EpicDto;
+import com.project.springboot.project_tracker.exceptions.NoSuchEpicFoundException;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
@@ -37,14 +38,9 @@ public class EpicController {
 //        projectId is required so that whenever an issue is created it got attached to some project.
         epicDto.setEpicStartDate(LocalDate.now());
         epicDto.setEpicDueDate(LocalDate.now().plusDays(12));
-
         // find a project
         Optional<Project> project = projectService.findAProjectById(projectId);
-
-
-
         Epic epicToCreate = modelMapper.map(epicDto, Epic.class);
-
         // map it with issue
         if(project.isPresent()){
 //            epicDto.setProject(project.get());
@@ -55,9 +51,19 @@ log.info(epicDto.toString());
         return epicService.createEpic(epicToCreate);
     }
 
-    @GetMapping("")
+    @GetMapping("/list-all")
     public List<Epic> listOfAllEpic(){
 
         return epicService.getListOfEpic();
+    }
+
+    @GetMapping("")
+    public EpicDto openEpicWithId(@RequestParam(value = "epic-id") int epicId){
+        Optional<Epic> epic = epicService.findEpicById(epicId);
+        if(epic.isPresent()){
+            EpicDto epicDto = modelMapper.map(epic.get(), EpicDto.class);
+            return epicDto;
+        }
+        throw new NoSuchEpicFoundException("searched epic is not found");
     }
 }

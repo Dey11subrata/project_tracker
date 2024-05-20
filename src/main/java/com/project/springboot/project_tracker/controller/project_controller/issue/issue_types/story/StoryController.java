@@ -1,6 +1,7 @@
 package com.project.springboot.project_tracker.controller.project_controller.issue.issue_types.story;
 
 import com.project.springboot.project_tracker.dto.project_dto.issue.issue_type.story.StoryDto;
+import com.project.springboot.project_tracker.exceptions.NoSuchStoryFoundException;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
@@ -41,8 +42,23 @@ public class StoryController {
         return storyService.createStory(storyToCreate);
     }
 
-    @GetMapping("")
+    @GetMapping("/list-all")
     public List<Story> listOfAllStories() {
         return storyService.getListOfAllStory();
+    }
+
+  // attach an epic with existing story
+
+
+    // open a Story with an Id
+    @GetMapping("")
+    public StoryDto openStoryWithId(@RequestParam(value = "story-id") int storyId){
+        Optional<Story> story = storyService.findStoryById(storyId);
+        if(story.isPresent()){
+            StoryDto storyDto = modelMapper.map(story.get(), StoryDto.class);
+            return storyDto;
+        }
+
+        throw new NoSuchStoryFoundException("searched story not found");
     }
 }

@@ -9,7 +9,7 @@ public interface ProjectService {
 
     Project createProject(Project project);
 
-    List<Project> getListOfAllProject(int pogeNumber, int pageSize);
+    List<Project> getListOfAllProject(int pageNumber, int pageSize);
 
     Optional<Project> findAProjectById(int id);
 }
