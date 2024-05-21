@@ -5,6 +5,7 @@ import com.project.springboot.project_tracker.model.users.User;
 import com.project.springboot.project_tracker.service.users_service.UserService;
 import com.project.springboot.project_tracker.utility.mapper.UserMapper;
 import com.project.springboot.project_tracker.utility.response.Response;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/register_user")
-    public User registerUser(@RequestBody UserDto userDto) {
+    public User registerUser(@Valid @RequestBody UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         return userService.createUser(user);
 //        returning in this manner exposes all the user related fields

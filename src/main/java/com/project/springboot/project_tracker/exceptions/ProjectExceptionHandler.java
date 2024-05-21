@@ -1,10 +1,16 @@
 package com.project.springboot.project_tracker.exceptions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ProjectExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(ProjectExceptionHandler.class);
 
     @ExceptionHandler(value = NoSuchProjectFoundException.class)
     public String noSuchProjectFoundExceptionHandler(){
@@ -24,5 +30,12 @@ public class ProjectExceptionHandler {
     @ExceptionHandler(value = NoSuchTaskFoundException.class)
     public String noSuchTaskFoundException(){
         return "No such Task Found....";
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public String methodArgumentNotValidException(MethodArgumentNotValidException ex){
+
+//       log.error(messageSourceResolvable.getDefaultMessage());
+        return ex.getMessage() ;
     }
 }
