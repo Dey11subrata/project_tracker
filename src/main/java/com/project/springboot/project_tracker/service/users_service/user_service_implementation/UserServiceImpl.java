@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User>  searchUserByEmail(String email) {
-        return userRepository.findByUserEmail(email);
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(int id, User user) {
-        user.setUserId(id);
+        user.setId(id);
         return userRepository.save(user);
     }
 }
