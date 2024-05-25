@@ -27,6 +27,7 @@ public class UserDto {
     private String userRole;
 
     @Email
+    @NotBlank(message = "mention email")
     private String userEmail;
 
 }

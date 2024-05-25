@@ -8,31 +8,41 @@ import com.project.springboot.project_tracker.model.project.issue.issue_types.st
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Task;
 import com.project.springboot.project_tracker.model.project.sprint.Sprint;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
-
+@Data
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+//    @Column(nullable = false)
+    private Integer id;
 
-    private String userFirstName;
+//    @Column(nullable = false)
+    private String fullName;
 
-    private String userLastName;
+//    @Column(unique = true, length = 100, nullable = false)
+    private String email;
 
-    private String userDeptCode;
+//    @Column(nullable = false)
+    private String password;
 
-    private String userRole;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
 
-    private String userEmail;
+    @UpdateTimestamp
+//    @Column(name = "updated_at")
+    private LocalDate updatedAt;
 
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
@@ -73,5 +83,34 @@ public class User {
     @OneToOne(mappedBy = "subTaskReporter", cascade = CascadeType.ALL)
     private SubTask subTask;
 
+    /* overrides of methods of UserDetails interface of Spring security*/
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -69,6 +69,7 @@ public class UserController {
         return searchedUser.get();
 
     }
+/*
 @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateUser(@PathVariable(name = "id") int userId, @RequestBody UserDto userDto){
         Response response = new Response();
@@ -89,6 +90,7 @@ log.info(userSearchedById.get().getUserFirstName());
                 .header("user_updated", "true")
                 .body(response);
     }
+*/
 
 
 }
