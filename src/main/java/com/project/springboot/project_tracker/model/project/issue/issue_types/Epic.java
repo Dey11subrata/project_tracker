@@ -13,18 +13,14 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Epic {
+public class Epic { 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int epicId;
     private String epicName;
-
-
     private Status epicStatus;
     private String epicSummary;
     private String epicDescription;
-
-
     //    private Epic epicParent;
     private LocalDate epicStartDate;
     private LocalDate epicDueDate;

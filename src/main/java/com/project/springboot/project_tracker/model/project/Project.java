@@ -1,5 +1,6 @@
 package com.project.springboot.project_tracker.model.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.type.Bug;
@@ -38,8 +39,9 @@ public class Project {
     private Set<Epic> epics;
 
 
+//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private List<Story> stories;
+    private Set<Story> stories;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<Task> tasks;

@@ -21,8 +21,6 @@ public class Story {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int storyId;
     private String storyName;
-
-
     private Status storyStatus;
     private String storySummary;
     private String storyDescription;
