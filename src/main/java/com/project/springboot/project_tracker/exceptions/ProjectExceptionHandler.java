@@ -38,4 +38,9 @@ public class ProjectExceptionHandler {
 //       log.error(messageSourceResolvable.getDefaultMessage());
         return ex.getMessage() ;
     }
+
+    @ExceptionHandler(value = NoSuchUserFound.class)
+    public String noSuchUserFoundException(){
+        return "Corresponding User not found";
+    }
 }

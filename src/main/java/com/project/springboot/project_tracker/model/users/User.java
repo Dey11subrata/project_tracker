@@ -41,11 +41,17 @@ public class User implements UserDetails {
     private LocalDate createdAt;
 
     @UpdateTimestamp
-//    @Column(name = "updated_at")
     private LocalDate updatedAt;
+
+/*for delete*/
+    private LocalDate deletedAt;
+
+    private boolean isDeleted;
+/*for delete*/
 
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
+
 
     @OneToOne(mappedBy = "projectReporter", cascade = CascadeType.ALL)
     private Project project;
@@ -59,7 +65,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "storyAssignee", cascade = CascadeType.ALL)
     private Set<Story> stories;
 
-    @OneToOne(mappedBy = "storyReporter", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "storyReporter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Story story;
 
     @ManyToOne
@@ -112,5 +118,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
