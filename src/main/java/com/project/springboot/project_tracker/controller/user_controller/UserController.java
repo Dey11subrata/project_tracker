@@ -7,6 +7,7 @@ import com.project.springboot.project_tracker.exceptions.NoSuchUserFound;
 import com.project.springboot.project_tracker.model.users.User;
 import com.project.springboot.project_tracker.response.UserUpdate;
 import com.project.springboot.project_tracker.service.users_service.UserService;
+import com.project.springboot.project_tracker.utility.VerifyUserContext;
 import com.project.springboot.project_tracker.utility.mapper.UserMapper;
 import com.project.springboot.project_tracker.utility.response.Response;
 import jakarta.validation.Valid;
@@ -42,10 +43,15 @@ public class UserController {
     @PostMapping("/update")
     public ResponseEntity<UserUpdate> updateUser(@RequestBody UserWithUpdatedDetails userWithUpdatedDetails){
         // find user by id
-        log.info(SecurityContextHolder.getContext().getAuthentication().getName());
+//        log.info(SecurityContextHolder.getContext().getAuthentication().getName());
 
         Optional<User> user = userService.searchUserById(userWithUpdatedDetails.getId());
-        if(user.isPresent() && SecurityContextHolder.getContext().getAuthentication().getName().equals(user.get().getUsername() )){
+
+        /*only login user can change its own details
+        * current login usr can be checked through SecurityContext
+        * */
+
+        if(user.isPresent() && VerifyUserContext.verifyUserContext(user.get())){
             userWithUpdatedDetails.setUpdatedAt(LocalDate.now());
             modelMapper.map(userWithUpdatedDetails, user.get());
 
