@@ -1,29 +1,26 @@
 package com.project.springboot.project_tracker.model.users;
 
-import com.project.springboot.project_tracker.constants.RoleEnum;
+import com.project.springboot.project_tracker.constants.RoleName;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
-@Data
-@NoArgsConstructor
+/*@Entity
+@Data*/
+
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
     @Column(unique = true, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private RoleEnum name;
+//    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
     @Column(nullable = false)
     private String description;
@@ -35,6 +32,9 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @OneToOne(mappedBy = "role")
+    private User user;
 
     // Getters and setters here....
 }

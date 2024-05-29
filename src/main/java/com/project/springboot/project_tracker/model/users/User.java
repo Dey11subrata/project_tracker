@@ -1,5 +1,6 @@
 package com.project.springboot.project_tracker.model.users;
 
+import com.project.springboot.project_tracker.constants.RoleName;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
@@ -13,6 +14,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -45,6 +47,9 @@ public class User implements UserDetails {
     @UpdateTimestamp
 //    @Column(name = "updated_at")
     private LocalDate updatedAt;
+
+//@Column(nullable = false)
+    private RoleName roleName;
 
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
@@ -88,7 +93,8 @@ public class User implements UserDetails {
     /* overrides of methods of UserDetails interface of Spring security*/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + roleName.name());
+        return List.of(authority);
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.project.springboot.project_tracker.controller.authentication_controller;
 
-import com.project.springboot.project_tracker.constants.RoleEnum;
+import com.project.springboot.project_tracker.constants.RoleName;
 import com.project.springboot.project_tracker.dto.user_dto.LoginUserDto;
 import com.project.springboot.project_tracker.dto.user_dto.RegisterUserDto;
-import com.project.springboot.project_tracker.model.users.Role;
 import com.project.springboot.project_tracker.model.users.User;
-import com.project.springboot.project_tracker.repository.user_repository.RoleRepository;
 import com.project.springboot.project_tracker.response.LoginResponse;
 import com.project.springboot.project_tracker.service.authentication_service.AuthenticationService;
 import com.project.springboot.project_tracker.service.jwt_service.JwtService;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
@@ -27,30 +23,21 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final ModelMapper modelMapper;
 
-    private final RoleRepository roleRepository;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, ModelMapper modelMapper, RoleRepository roleRepository) {
+    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, ModelMapper modelMapper) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
         this.modelMapper = modelMapper;
-        this.roleRepository = roleRepository;
+
     }
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
-
-        if (optionalRole.isEmpty()) {
-            return null;
+        // check if role in given or not
+        if(registerUserDto.getRoleName().toString().isEmpty()){
+            // assign default role
+            registerUserDto.setRoleName(RoleName.USER);
         }
-
-        /*var user = new User()
-                .setFullName(input.getFullName())
-                .setEmail(input.getEmail())
-                .setPassword(passwordEncoder.encode(input.getPassword()))
-                .setRole(optionalRole.get());*/
-
 
         User signup = authenticationService.signup(registerUserDto);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(signup);
