@@ -54,8 +54,8 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
 
-    @OneToOne(mappedBy = "projectReporter", cascade = CascadeType.ALL)
-    private Project project;
+//    @OneToMany(mappedBy = "projectReporter", cascade = CascadeType.ALL)
+//    private Set<Project> project;
 
     @ManyToMany(mappedBy = "epicAssignee", fetch = FetchType.EAGER)
     private Set<Epic> epics;

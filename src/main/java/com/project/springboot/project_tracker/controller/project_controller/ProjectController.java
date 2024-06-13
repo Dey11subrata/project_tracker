@@ -42,13 +42,10 @@ public class ProjectController {
         Project project = modelMapper.map(projectDto, Project.class);
         Optional<User> user = userService.searchUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if(user.isPresent()){
-
             project.setProjectReporter(user.get());
         }
 
-
         Project createdProject = projectService.createProject(project);
-
         response.setStatus(HttpStatus.ACCEPTED.value());
         response.setMessage("Project details saved");
         response.setProject(createdProject);
