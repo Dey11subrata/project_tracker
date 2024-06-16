@@ -6,7 +6,7 @@ import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.users.User;
 import com.project.springboot.project_tracker.service.project_service.ProjectService;
 import com.project.springboot.project_tracker.service.users_service.UserService;
-import com.project.springboot.project_tracker.utility.response.Response;
+import com.project.springboot.project_tracker.utility.response.ProjectResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,8 +35,8 @@ public class ProjectController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('PROJECT_OWNER', 'PROJECT_MANAGER')")
-    public ResponseEntity<Response> createNewProject(@RequestBody ProjectDto projectDto) {
-        Response response = new Response();
+    public ResponseEntity<ProjectResponse> createNewProject(@RequestBody ProjectDto projectDto) {
+        ProjectResponse response = new ProjectResponse();
         projectDto.setProjectStartDate(LocalDate.now());
         projectDto.setProjectEstimatedCompletionDate(LocalDate.now().plusDays(15));
         Project project = modelMapper.map(projectDto, Project.class);

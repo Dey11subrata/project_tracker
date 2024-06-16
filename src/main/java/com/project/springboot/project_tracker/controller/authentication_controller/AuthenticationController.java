@@ -7,7 +7,9 @@ import com.project.springboot.project_tracker.model.users.User;
 import com.project.springboot.project_tracker.response.LoginResponse;
 import com.project.springboot.project_tracker.service.authentication_service.AuthenticationService;
 import com.project.springboot.project_tracker.service.jwt_service.JwtService;
+import com.project.springboot.project_tracker.utility.response.SignUpResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,15 +34,28 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<SignUpResponse> register(@RequestBody RegisterUserDto registerUserDto) {
         // check if role in given or not
+        SignUpResponse signUpResponse = new SignUpResponse();
+        // set default value
+        signUpResponse.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        signUpResponse.setMessage("OOPs!!...Something Went Wrong...");
         if(registerUserDto.getRoleName().toString().isEmpty()){
             // assign default role
             registerUserDto.setRoleName(RoleName.USER);
         }
 
         User signup = authenticationService.signup(registerUserDto);
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(signup);
+        if(signup != null){
+            signUpResponse.setStatus(HttpStatus.CREATED.value());
+            signUpResponse.setMessage("Registration Successful...");
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .header("user-registered", "true")
+                    .body(signUpResponse);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                .header("user-registerd", "false")
+                .body(signUpResponse);
     }
 
     @PostMapping("/login")

@@ -4,7 +4,7 @@ import com.project.springboot.project_tracker.dto.user_dto.UserDto;
 import com.project.springboot.project_tracker.model.users.User;
 import com.project.springboot.project_tracker.service.users_service.UserService;
 import com.project.springboot.project_tracker.utility.mapper.UserMapper;
-import com.project.springboot.project_tracker.utility.response.Response;
+import com.project.springboot.project_tracker.utility.response.ProjectResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
