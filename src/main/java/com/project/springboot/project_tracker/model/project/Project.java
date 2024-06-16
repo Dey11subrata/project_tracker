@@ -31,8 +31,8 @@ public class Project {
 //    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> user;
-
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User projectReporter;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)

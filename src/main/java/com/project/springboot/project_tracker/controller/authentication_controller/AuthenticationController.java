@@ -1,5 +1,6 @@
 package com.project.springboot.project_tracker.controller.authentication_controller;
 
+import com.project.springboot.project_tracker.constants.RoleName;
 import com.project.springboot.project_tracker.dto.user_dto.LoginUserDto;
 import com.project.springboot.project_tracker.dto.user_dto.RegisterUserDto;
 import com.project.springboot.project_tracker.model.users.User;
@@ -7,6 +8,7 @@ import com.project.springboot.project_tracker.response.LoginResponse;
 import com.project.springboot.project_tracker.service.authentication_service.AuthenticationService;
 import com.project.springboot.project_tracker.service.jwt_service.JwtService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +23,24 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final ModelMapper modelMapper;
 
+
     public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, ModelMapper modelMapper) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
         this.modelMapper = modelMapper;
+
     }
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+        // check if role in given or not
+        if(registerUserDto.getRoleName().toString().isEmpty()){
+            // assign default role
+            registerUserDto.setRoleName(RoleName.USER);
+        }
 
-        return ResponseEntity.ok(registeredUser);
+        User signup = authenticationService.signup(registerUserDto);
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(signup);
     }
 
     @PostMapping("/login")

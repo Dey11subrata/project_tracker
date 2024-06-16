@@ -1,5 +1,6 @@
 package com.project.springboot.project_tracker.model.users;
 
+import com.project.springboot.project_tracker.constants.RoleName;
 import com.project.springboot.project_tracker.model.project.Project;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.Epic;
 import com.project.springboot.project_tracker.model.project.issue.issue_types.story.Story;
@@ -9,9 +10,11 @@ import com.project.springboot.project_tracker.model.project.issue.issue_types.st
 import com.project.springboot.project_tracker.model.project.sprint.Sprint;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -21,6 +24,7 @@ import java.util.Set;
 
 @Entity
 @Data
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +48,14 @@ public class User implements UserDetails {
 //    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
+//@Column(nullable = false)
+    private RoleName roleName;
+
     @ManyToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Project> projects;
 
-    @OneToOne(mappedBy = "projectReporter", cascade = CascadeType.ALL)
-    private Project project;
+//    @OneToMany(mappedBy = "projectReporter", cascade = CascadeType.ALL)
+//    private Set<Project> project;
 
     @ManyToMany(mappedBy = "epicAssignee", fetch = FetchType.EAGER)
     private Set<Epic> epics;
@@ -86,7 +93,8 @@ public class User implements UserDetails {
     /* overrides of methods of UserDetails interface of Spring security*/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + roleName.name());
+        return List.of(authority);
     }
 
     @Override
@@ -112,5 +120,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
